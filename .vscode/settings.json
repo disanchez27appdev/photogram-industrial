@@ -48,6 +48,6 @@
   "redhat.telemetry.enabled": false,
   "rufo.useBundler": true,
   "emmet.includeLanguages": {
-    "erb": "html"
+   "erb": "html"
   },
 }
