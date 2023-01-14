@@ -32,4 +32,10 @@ class User < ApplicationRecord
   has_many :follow_requests_received, class_name: "FollowRequest", foreign_key: "recipient_id"
   has_many :follow_requests_sent, class_name: "FollowRequest", foreign_key: "sender_id"
   has_many :likes, class_name: "Like", foreign_key: "fan_id"
+  
+  #Indirect Associations
+  has_many :liked_photos, through: :likes, source: :photo
+  has_many :leaders, through: :follow_requests_sent, source: :recipient
+
+
 end
