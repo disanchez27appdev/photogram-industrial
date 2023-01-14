@@ -20,10 +20,22 @@
 #  fk_rails_...  (owner_id => users.id)
 #
 class Photo < ApplicationRecord
+
+  validates :caption, presence: true
+  validates :image, presence: true
+
+
   belongs_to :owner, class_name: "User"
   has_many :comments, class_name: "Comment"
   has_many :likes, class_name: "Like"
 
   has_many :fans, through: :likes
-  
+
+  scope :past_week, -> { where(created_at: 1.week.ago...) }
+  scope :by_likes, -> { order(likes_count: :desc) }
+
+  def fan_list
+    @_fan_list ||= fans.pluck(:username).to_sentence
+  end
+
 end
