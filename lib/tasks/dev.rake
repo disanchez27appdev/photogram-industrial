@@ -1,6 +1,9 @@
 task sample_data: :environment do
 
   ## DESTROY EXISTING SAMPLE DATA ##
+
+  p "Destroying Existing Sample Data"
+
   Like.destroy_all
   Comment.destroy_all
   Photo.destroy_all
@@ -19,7 +22,7 @@ task sample_data: :environment do
 
   p "Heeeere's Danny!"
 
-  p User.where(email: "danny@danny.com")
+  p danny
 
   ## SAMPLE USERS ###
   
