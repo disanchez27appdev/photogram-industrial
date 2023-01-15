@@ -50,7 +50,7 @@ task sample_data: :environment do
     new_photo = Photo.create(
      owner_id: User.all.sample.id,
      caption:  Faker::Hipster.sentence(word_count: 10),
-     image:   "http://www.google.com"
+     image:   "http://www.robohash.org/"+Faker::Number.number(digits: 4).to_s
     )
   end
 
