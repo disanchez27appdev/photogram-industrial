@@ -2,15 +2,27 @@
 <html>
   <head>
     <title>VanillaRails</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <!-- Make it responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Connect Turbolinks -->
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%=render "shared/cdn_assets"%>
   </head>
 
   <body>
-    <%= yield %>
+
+    <%= render "shared/navbar" %>
+    <div class="container">
+    
+    <%= notice %>
+    <%= alert %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>

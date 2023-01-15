@@ -1,5 +1,26 @@
 task sample_data: :environment do
 
+  ## DESTROY EXISTING SAMPLE DATA ##
+  Like.destroy_all
+  Comment.destroy_all
+  Photo.destroy_all
+  FollowRequest.destroy_all
+  User.destroy_all
+
+  ## SAMPLE DANNY ###
+  p "Creating Danny."
+
+  danny = User.create(
+    email: "danny@danny.com",
+    username: "danny",
+    password: "password",
+    private: false
+  )
+
+  p "Heeeere's Danny!"
+
+  p User.where(email: "danny@danny.com")
+
   ## SAMPLE USERS ###
   
   p "Creating sample users"
