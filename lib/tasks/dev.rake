@@ -17,36 +17,34 @@ task sample_data: :environment do
   # p User.all.order(id: :desc).first
 
 
-  p "creating sample photos"
+  # p "creating sample photos"
 
-  100.times do
-    new_photo = Photo.create(
-     owner_id: User.all.sample.id,
-     caption:  Faker::Hipster.sentence(word_count: 10),
-     image:   "http://www.google.com"
-    )
-    p new_photo.errors.full_messages
-  end
+  # 100.times do
+  #   new_photo = Photo.create(
+  #    owner_id: User.all.sample.id,
+  #    caption:  Faker::Hipster.sentence(word_count: 10),
+  #    image:   "http://www.google.com"
+  #   )
+  # end
 
-  p "#{Photo.count} photos created."
-  p "Here's an example:"
-  p Photo.all.order(id: :desc).first
+  # p "#{Photo.count} photos created."
+  # p "Here's an example:"
+  # p Photo.all.order(id: :desc).first
 
 
   p "creating sample follow request."
 
-  10.times do
-    new_request = Follow_request.create(
+  20.times do
+    new_request = FollowRequest.create(
      sender_id: User.all.sample.id,
-     sender_id: User.all.sample.id,
-     caption:  Faker::Hipster.sentence(word_count: 10),
-     image:   "http://www.google.com"
+     recipient_id: User.all.sample.id,
+     status: ["pending", "rejected", "accepted"].sample 
     )
-    p new_photo.errors.full_messages
+    p new_request.errors.full_messages
   end
 
-  p "#{Photo.count} photos created."
+  p "#{FollowRequest.count} follow requests created."
   p "Here's an example:"
-  p Photo.all.order(id: :desc).first
+  p FollowRequest.all.order(id: :desc).first
 
 end
