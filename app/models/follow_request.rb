@@ -22,6 +22,7 @@
 class FollowRequest < ApplicationRecord
 
   validates :recipient_id, uniqueness: { scope: :sender_id, message: "already followed" }
+  validates :recipient_id, uniqueness: { scope: :recipient_id, message: "You can't follow yourself!" }
   validates :sender_id, presence: true
   validates :recipient_id, presence: true
   
