@@ -1,4 +1,6 @@
 task sample_data: :environment do
+
+  ### SAMPLE USERS ###
   
   # p "creating sample users"
   
@@ -16,6 +18,7 @@ task sample_data: :environment do
   # p "Here's an example user:"
   # p User.all.order(id: :desc).first
 
+  ### SAMPLE PHOTOS ###
 
   # p "creating sample photos"
 
@@ -31,10 +34,27 @@ task sample_data: :environment do
   # p "Here's an example:"
   # p Photo.all.order(id: :desc).first
 
+  ### SAMPLE COMMENTS ###
 
-  p "creating sample follow request."
+  # p "creating sample comments."
 
-  20.times do
+  # 20.times do
+  #   new_comment = Comment.create(
+  #    photo_id: User.all.sample.id,
+  #    author_id: User.all.sample.id,
+  #    body: Faker::Hipster.sentence(word_count: 15)
+  #   )
+  # end
+
+  # p "#{Comment.count} comments created."
+  # p "Here's an example:"
+  # p Comment.all.order(id: :desc).first
+
+  ### SAMPLE FOLLOW REQUESTS ###
+
+  p "creating sample follow requests."
+
+  3.times do
     new_request = FollowRequest.create(
      sender_id: User.all.sample.id,
      recipient_id: User.all.sample.id,
