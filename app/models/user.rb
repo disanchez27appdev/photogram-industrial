@@ -29,7 +29,8 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates :email, presence: true
-  validates :private, presence: true
+  validates :password, presence: true
+  validates :username, format: { with: /\A[a-zA-Z0-9]+\Z/ }
 
   has_many :own_photos, class_name: "Photo", foreign_key: "owner_id"
   has_many :comments, class_name: "Comment", foreign_key: "author_id"

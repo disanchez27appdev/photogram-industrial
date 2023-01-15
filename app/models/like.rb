@@ -21,6 +21,7 @@
 class Like < ApplicationRecord
 
   validates :fan_id, uniqueness: { scope: :photo_id, message: "has already liked this photo" }
+  validates :photo_id, presence: true
 
   belongs_to :fan, class_name: "User"
   belongs_to :photo, class_name: "Photo"

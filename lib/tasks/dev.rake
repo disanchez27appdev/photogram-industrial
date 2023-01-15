@@ -1,16 +1,28 @@
-task sample_user_data: :environment do
+task sample_data: :environment do
   
-  p "creating sample data"
+  p "creating sample users"
   
   12.times do
     name = Faker::Name.first_name
     new_user = User.create(
       email: "#{name}@gmail.com",
-      #password: Faker::String.random(length: 8),
-      username: "#{name}"+Faker::String.random(length: 3),
-      likes_count: Faker::Number.number(digits: 3),
-      comments_count: Faker::Number.number(digits: 2)
+      password: Faker::Alphanumeric.alphanumeric(number: 6),
+      username: "#{name}"+Faker::Alphanumeric.alphanumeric(number: 3),
+      private: ["true", "false"].sample
     )
+    #p new_user.errors.full_messages
   end
-  p "#{User.count} users created"
+  
+  p "#{User.count} users created, here's an example:"
+  p User.all.order(id: :desc).first
+
+
+  p "creating sample photos"
+
+  100.times do
+    new_photo = Photo.create(
+      
+    )
+
+
 end

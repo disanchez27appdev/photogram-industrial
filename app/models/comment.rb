@@ -22,6 +22,9 @@
 class Comment < ApplicationRecord
 
   validates :body, presence: true
+  validates :author_id, presence: true
+  validates :photo_id, presence: true
+
 
   belongs_to :author, class_name: "User"
   belongs_to :photo, class_name: "Photo"

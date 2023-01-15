@@ -23,6 +23,7 @@ class Photo < ApplicationRecord
 
   validates :caption, presence: true
   validates :image, presence: true
+  validates :owner_id, presence: true
 
 
   belongs_to :owner, class_name: "User"
