@@ -1,47 +1,91 @@
-<h1> <%=@user.username.titlecase%>'s Profile</h1>
-<% if %>
-<% @user.followers.count == 1 %>
-<h2> <%= @user.followers.count%> Follower</h2>
-<% else %>
-<h2> <%= @user.followers.count%> Follower</h2>
-<% end %>
-
-<h2> <%= @user.leaders.count%> Following</h2>
-
-<% if %>
-<% @user.received_follow_requests.where(status: "pending").count == 1 %>
-<h2> <%= @user.received_follow_requests.where(status: "pending").count%> Follower Pending</h2>
-<% else %>
-<h2> <%= @user.received_follow_requests.where(status: "pending").count%> Followers Pending</h2>
-<% end %>
-
-<h3> Danny's Photos</h3>
-<div class="row">
-
-  <% @user.own_photos.each do |photo|%>
+<div class="container col-md-6">
+  <div class="row">
     <div class="col">
-      <div class="card">
-        <%= image_tag photo.image, class: "card-img-top" %>
-
-        <div class="card-body">
-        <%if photo.comments.count == 1%>
-        <h4><%=photo.comments.count%> Comment</h4>
-        <% else %>
-        <h4><%=photo.comments.count%> Comments</h4>
-        <% end %>
+      <h1> <%= current_user.username.titlecase%>'s Profile</h1>
+      <div class="row">
+        <div class="col">
+          <% if %>
+            <%  current_user.followers.count == 1 %>
+            <h3> <%=  current_user.followers.count%> Follower</h3>
+          <% else %>
+            <h3> <%=  current_user.followers.count%> Followers</h3>
+          <% end %>
         </div>
+        <div class="col">
+          <h3> <%=  current_user.leaders.count%> Following</h3>
+        </div>
+        <div class="col">
+          <% if %>
+            <%  current_user.received_follow_requests.where(status: "pending").count == 1 %>
+            <h2> <%=  current_user.received_follow_requests.where(status: "pending").count%> Follower Pending</h2>
+          <% else %>
+            <h3> <%=  current_user.received_follow_requests.where(status: "pending").count%> Followers Pending</h3>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <h3> Danny's Photos</h3>
+  <div class="row">
+    <%  current_user.own_photos.each do |photo|%>
+      <div class="col">
+        <div class="card">
+          <%= image_tag photo.image, class: "card-img-top" %>
+          <div class="card card-body card-text">
+            <p> <%= photo.caption %> </p>
+          </div>
+          <%if photo.comments.count == 1%>
+            <h4><%=photo.comments.count%> Comment</h4>
+          <% else %>
+            <h4><%=photo.comments.count%> Comments</h4>
+          <% end %>
         <div class="card-body">
           <ul class="list-group list-group-flush">
-            <% photo.comments.each do |comment| %>
-              <li>
-                <p class="card-text"><%= comment.body %></p>
-              </li>
+            <%if photo.comments.count > 0 %>
+              <% photo.comments.each do |comment| %>
+                <li>
+                  <div class="row">
+                    <div class="row">
+                      <div class="col">
+                        <% image_tag photo.image, class: "card-img-top"%>
+                      </div>
+                      <div class="row">
+                        <div class="card-text">
+                          <p><small><%= comment.author.username %></small></p>
+                        </div>
+                      <div class="col">
+                        <p class="card-text"><%= comment.body %></p>
+                      </div>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <hr>
+              <% end %>
             <% end %>
+
+              <%= render "comments/form", comment: Comment.new(author: @author, photo_id: photo.id) %>
+
           </ul>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col">
+              <div class="card-text">
+              <p>Some Link</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card-text">
+                <p>Some Link</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <hr>
     <% end %>
-
   </div>
+</div>
 </div>

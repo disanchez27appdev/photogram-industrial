@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root "photos#index"
+
   resources :likes
   resources :follow_requests
   resources :comments
@@ -7,6 +8,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users, only: :show
+
+  get "/:username" => "users#show"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
 end
