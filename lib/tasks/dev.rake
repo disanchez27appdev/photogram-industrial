@@ -1,6 +1,9 @@
 task sample_data: :environment do
 
   ## DESTROY EXISTING SAMPLE DATA ##
+
+  p "Destroying Existing Sample Data"
+
   Like.destroy_all
   Comment.destroy_all
   Photo.destroy_all
@@ -19,7 +22,7 @@ task sample_data: :environment do
 
   p "Heeeere's Danny!"
 
-  p User.where(email: "danny@danny.com")
+  p danny
 
   ## SAMPLE USERS ###
   
@@ -36,70 +39,48 @@ task sample_data: :environment do
   end
   
   p "#{User.count} users created."
-  p "Here's an example user:"
   p User.all.order(id: :desc).first
 
-  ## SAMPLE PHOTOS ###
+  users = User.all
 
-  p "Creating sample photos"
+  users.each do |first_user|
+    users.each do |second_user|
+      if rand < 0.75
+        first_user.sent_follow_requests.create(
+          recipient: second_user,
+          status: FollowRequest.statuses.values.sample
+        )
+      end
 
-  100.times do
-    new_photo = Photo.create(
-     owner_id: User.all.sample.id,
-     caption:  Faker::Hipster.sentence(word_count: 10),
-     image:   "http://www.google.com"
-    )
+      if rand < 0.75
+        second_user.sent_follow_requests.create(
+          recipient: first_user,
+          status: FollowRequest.statuses.values.sample
+        )
+      end
+    end
   end
 
-  p "#{Photo.count} photos created."
-  p "Here's an example:"
-  p Photo.all.order(id: :desc).first
+  users.each do |user|
+    rand(15).times do
+      photo = user.own_photos.create(
+        caption: Faker::Quote.jack_handey,
+        image: "https://robohash.org/#{rand(9999)}"
+      )
 
-  ## SAMPLE COMMENTS ###
+      user.followers.each do |follower|
+        if rand < 0.5
+          photo.fans << follower
+        end
 
-  p "Creating sample comments."
-
-  20.times do
-    new_comment = Comment.create(
-     photo_id: Photo.all.sample.id,
-     author_id: User.all.sample.id,
-     body: Faker::Hipster.sentence(word_count: 15)
-    )
+        if rand < 0.25
+          photo.comments.create(
+            body: Faker::Quote.jack_handey,
+            author: follower
+          )
+        end
+      end
+    end
   end
-
-  p "#{Comment.count} comments created."
-  p "Here's an example:"
-  p Comment.all.order(id: :desc).first
-
-  ## SAMPLE FOLLOW REQUESTS ###
-
-  p "Creating sample follow requests."
-
-  3.times do
-    new_request = FollowRequest.create(
-     sender_id: User.all.sample.id,
-     recipient_id: User.all.sample.id,
-     status: ["pending", "rejected", "accepted"].sample 
-    )
-  end
-
-  p "#{FollowRequest.count} follow requests created."
-  p "Here's an example:"
-  p FollowRequest.all.order(id: :desc).first
-
-  ### SAMPLE LIKES ###
-
-  p "Creating sample Likes."
-
-  30.times do
-    new_like = Like.create(
-     fan_id: User.all.sample.id,
-     photo_id: Photo.all.sample.id, 
-    )
-  end
-
-  p "#{Like.count} likes created."
-  p "Here's an example:"
-  p Like.all.order(id: :desc).first
 
 end
