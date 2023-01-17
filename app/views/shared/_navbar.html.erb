@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container">
+
+    <%= link_to "Photogram", root_path, class: "navbar-brand"%>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/photos">Photos</a></li>
+            <li><a class="dropdown-item" href="/comments">Comments</a></li>
+            <li><a class="dropdown-item" href="/likes">Likes</a></li>
+            <li><a class="dropdown-item" href="follow_requests">Follow Requests</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu">
+            <% if user_signed_in?%>
+            <%# <li><a class="dropdown-item" href="/users/<%=@user.username%>">My Profile</a></li> %>
+              <li><a class="dropdown-item" href="/users/sign_out">Sign-Out</a></li>
+              <li><a class="dropdown-item" href="/users/edit">Edit Profile</a></li>
+            <% else %>
+              <li><a class="dropdown-item" href="/users/sign_in">Sign-In</a></li>
+              <li><a class="dropdown-item" href="/users/sign_up">Sign-Up</a></li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
